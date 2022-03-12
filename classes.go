@@ -23,7 +23,7 @@ type BodyClasses struct {
 type BodySingleClasses struct {
 	Code    int      `json:"code"`
 	Msg     string   `json:"msg"`
-	Classes *Classes `json:"classes"`
+	Classes *Classes `json:"single_classes"`
 }
 
 func ClassesQuery(w http.ResponseWriter, r *http.Request) {

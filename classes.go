@@ -34,6 +34,7 @@ func ClassesQuery(w http.ResponseWriter, r *http.Request) {
 	pid := r.Form.Get("pid")
 	var rows *sql.Rows
 	var err error
+
 	if len(pid) == 1 {
 		rows, err = Conn.Query(`SELECT * FROM classes WHERE pid in (?)`, pid)
 	} else {

@@ -38,6 +38,7 @@ public class Classes {
                 "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", classes=" + classes +
+                ", singleClasses=" + singleClasses +
                 '}';
     }
 }

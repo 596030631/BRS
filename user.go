@@ -4,18 +4,28 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
+	"strconv"
 )
 
-const CodeErrorLogin = 11001
+const CodeErrorLoginPasswd = 11001
+
+const CodeErrorRegisterUserExist = 11011
 
 type User struct {
-	Id        int    `json:"id"`
 	UserId    string `json:"user_id"`
 	UserName  string `json:"user_name"`
 	Passwd    string `json:"passwd"`
 	UserSex   string `json:"user_sex"`
 	UserAge   int    `json:"user_age"`
 	UserLevel int    `json:"user_level"`
+	UserIcon  string `json:"user_icon"`
+}
+
+type BodyUser struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+	User *User  `json:"user"`
 }
 
 func query(userId string) (*User, error) {
@@ -25,7 +35,7 @@ func query(userId string) (*User, error) {
 	var user = new(User)
 	if err == nil {
 		if rows.Next() {
-			err = rows.Scan(&user.Id, &user.UserId, &user.UserName, &user.Passwd, &user.UserSex, &user.UserAge, &user.UserLevel)
+			err = rows.Scan(&user.UserId, &user.UserName, &user.Passwd, &user.UserSex, &user.UserAge, &user.UserLevel, &user.UserIcon)
 			fmt.Println(fmt.Sprintf("%+v", &user))
 		}
 	}
@@ -37,36 +47,95 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		userId := r.Form.Get("user_id")
 		if len(userId) > 0 {
-			user, e := query(userId)
-			if e != nil {
-				_, _ = w.Write([]byte(e.Error()))
-				return
-			}
-			passwd := r.Form.Get("passwd")
-			if len(passwd) > 0 && passwd == user.Passwd {
-				body := BodyUser{Code: CodeSuccess, Msg: "登录成功", User: user}
-				fmt.Println(body)
-				d, _ := json.Marshal(body)
-				_, _ = w.Write(d)
+			user, err := query(userId)
+			if err == nil {
+				passwd := r.Form.Get("passwd")
+				if len(passwd) > 0 && passwd == user.Passwd {
+					body := BodyUser{Code: CodeSuccess, Msg: "login successful", User: user}
+					d, _ := json.Marshal(body)
+					_, _ = w.Write(d)
+				} else {
+					BackError(w, CodeErrorLoginPasswd, "login failure")
+				}
 			} else {
-				body := BodyError{Code: CodeErrorLogin, Msg: "登录失败"}
-				d, _ := json.Marshal(body)
-				_, _ = w.Write(d)
+				BackError(w, CodeErrorDataBase, err.Error())
 			}
 		} else {
-			w.WriteHeader(http.StatusBadRequest)
-			body := BodyError{Code: CodeErrorParamLess, Msg: "param less"}
-			d, _ := json.Marshal(body)
-			_, _ = w.Write(d)
+			BackError(w, CodeErrorParamLess, "param less")
 		}
 	} else {
-		w.WriteHeader(http.StatusBadRequest)
-		body := BodyError{Code: CodeErrorParamFormat, Msg: "param parse error"}
-		d, _ := json.Marshal(body)
-		_, _ = w.Write(d)
+		BackError(w, CodeErrorParamFormat, "param parse error")
 	}
 }
 
-func CreateUser() {
+func CreateUser(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err == nil {
+		userId := r.Form.Get("user_id")
+		userName := r.Form.Get("user_name")
+		passwd := r.Form.Get("passwd")
+		userSex := r.Form.Get("user_sex")
+		userAge := r.Form.Get("user_age")
+		userLevel := r.Form.Get("user_level")
+		userIcon := r.Form.Get("user_icon")
 
+		if len(userId) < 6 || len(userId) > 128 {
+			BackError(w, CodeErrorParamFormat, "user_id error")
+		} else if match, _ := regexp.MatchString("[A-z|0-9]+", userId); !match {
+			BackError(w, CodeErrorParamFormat, "user_id error format")
+		} else if len(passwd) < 6 || len(passwd) > 128 {
+			BackError(w, CodeErrorParamFormat, "password error")
+		} else if match, _ := regexp.MatchString("[A-z|0-9]+", userId); !match {
+			BackError(w, CodeErrorParamFormat, "password error format")
+		} else if len(userLevel) != 1 {
+			BackError(w, CodeErrorParamFormat, "user_level error")
+		} else if match, _ := regexp.MatchString("[1-2]", userLevel); !match {
+			BackError(w, CodeErrorParamFormat, "user_level error, right in [1,2]")
+		} else if len(userName) < 6 || len(userName) > 128 {
+			BackError(w, CodeErrorParamFormat, "user_name error")
+		} else {
+			userAgeInt := 0
+			if len(userAge) > 0 && len(userAge) < 4 {
+				if userAgeInt, err = strconv.Atoi(userAge); err != nil {
+					BackError(w, CodeErrorParamFormat, "userAge error")
+					return
+				}
+			}
+
+			var userLevelInt int
+			if userLevelInt, err = strconv.Atoi(userLevel); err != nil {
+				BackError(w, CodeErrorParamFormat, "userLevel error")
+				return
+			}
+
+			user := User{userId, userName, passwd, userSex, userAgeInt, userLevelInt, userIcon}
+			prepare, err := Conn.Prepare(`INSERT user (user_id, user_name, passwd, user_sex,user_age,user_level,user_icon)  VALUES (?,?,?,?,?,?,?)`)
+			if err == nil {
+				exec, err := prepare.Exec(user.UserId, user.UserName, user.Passwd, user.UserSex, user.UserAge, user.UserLevel, user.UserIcon)
+				if err == nil {
+					eff, err := exec.RowsAffected()
+					if err == nil {
+						if eff == 1 {
+							body := BodyUser{Code: CodeSuccess, Msg: "register successful", User: &user}
+							d, _ := json.Marshal(body)
+							_, _ = w.Write(d)
+						} else {
+							BackError(w, CodeErrorDataBase, "insert error")
+
+						}
+					} else {
+						BackError(w, CodeErrorDataBase, err.Error())
+					}
+				} else if match, _ := regexp.MatchString("Error 1062: Duplicate entry .+ for key 'PRIMARY'", err.Error()); match {
+					BackError(w, CodeErrorRegisterUserExist, "user has exist!")
+				} else {
+					BackError(w, CodeErrorDataBase, err.Error())
+				}
+			} else {
+				BackError(w, CodeErrorDataBase, err.Error())
+			}
+		}
+	} else {
+		BackError(w, CodeErrorParamFormat, err.Error())
+	}
 }

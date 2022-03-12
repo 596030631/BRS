@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/id1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:contentDescription="@null"
+            android:gravity="center_vertical"
+            android:text="设备类别"
+            android:textColor="#ff1296db"
+            android:textSize="20sp"
+            app:drawableStartCompat="@drawable/ic_home_material_header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/id2"
+            android:layout_width="0dp"
+            android:layout_height="0.1dp"
+            android:background="#1296db"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id1" />
+
+        <TextView
+            android:id="@+id/btn_classes_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:text="类别新增"
+            android:textColor="#1296db"
+            app:drawableTopCompat="@drawable/ic_home_material_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id2" />
+
+        <TextView
+            android:id="@+id/btn_classes_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:text="类别查看"
+            android:textColor="#1296db"
+            app:drawableTopCompat="@drawable/ic_home_material_cat"
+            app:layout_constraintStart_toEndOf="@id/btn_classes_add"
+            app:layout_constraintTop_toBottomOf="@id/id2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

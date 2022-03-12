@@ -26,11 +26,11 @@ func register(w http.ResponseWriter, r *http.Request) {
 func classesAdd(w http.ResponseWriter, r *http.Request) {
 	AddClasses(w, r)
 }
-func materialAdd(w http.ResponseWriter, r *http.Request) {
-	AddMaterial(w, r)
-}
 func classesList(w http.ResponseWriter, r *http.Request) {
 	ClassesQuery(w, r)
+}
+func materialAdd(w http.ResponseWriter, r *http.Request) {
+	AddMaterial(w, r)
 }
 
 func Listener() {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.classes.ClassesAddFragment"
+    tools:viewBindingIgnore="false">
+
+    <EditText
+        android:id="@+id/input_cid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="类别编号"
+        android:background="@null"
+        android:drawableStart="@drawable/ic_classes_add_id"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="类别编号"
+        android:inputType="number"
+        android:maxLength="10"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/input_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="类别名称"
+        android:background="@null"
+        android:drawableStart="@drawable/ic_classes_add_name"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="类别名称"
+        android:inputType="text"
+        android:maxLength="10"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/btn_pid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="所属类别"
+        app:drawableStartCompat="@drawable/ic_classes_add_pid" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="提交信息" />
+
+</LinearLayout>

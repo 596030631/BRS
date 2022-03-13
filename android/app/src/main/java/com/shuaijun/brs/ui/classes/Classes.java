@@ -23,10 +23,10 @@ public class Classes {
         @NonNull
         @Override
         public String toString() {
-            return "ClassesDTO{" +
+            return "Class:{" +
                     "cid='" + cid + '\'' +
-                    ", name='" + name + '\'' +
                     ", pid='" + pid + '\'' +
+                    ", name='" + name + '\'' +
                     '}';
         }
     }

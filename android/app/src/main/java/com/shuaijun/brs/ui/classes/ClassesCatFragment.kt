@@ -1,5 +1,6 @@
 package com.shuaijun.brs.ui.classes
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ class ClassesCatFragment : Fragment() {
     ): View =
         FragmentClassesCatBinding.inflate(inflater, container, false).apply { binding = this }.root
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -35,7 +37,9 @@ class ClassesCatFragment : Fragment() {
                     false
                 )
             }, { binding, item ->
-                binding.label.text = item.toString()
+                binding.labelName.text = "类别名称:" + item.name
+                binding.labelCid.text = "类别编号:" + item.cid
+                binding.labelPid.text = "上级类别:" + item.pid
             }, mutableListOf()
         ).apply {
             binding.recyclerview.adapter = this

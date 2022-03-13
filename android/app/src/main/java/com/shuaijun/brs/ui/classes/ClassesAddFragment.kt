@@ -1,5 +1,6 @@
 package com.shuaijun.brs.ui.classes
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,7 @@ class ClassesAddFragment : Fragment() {
 
     private lateinit var viewModel: ClassesAddViewModel
     private lateinit var binding: FragmentClassesAddBinding
+    private var classesDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +37,34 @@ class ClassesAddFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ClassesAddViewModel::class.java)
 
+
+
+        RF.getInstance().classesList("all")
+            .map {
+                val array = arrayListOf<String>()
+                for (i in it.classes) {
+                    array.add(i.cid + "\t" + i.name)
+                }
+                return@map array.toTypedArray()
+            }
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe {data->
+                AlertDialog.Builder(requireContext())
+                    .setItems(data) { dialog, which ->
+                        Log.d("TAG", "which=$which")
+                        binding.btnPid.text = data[which].split('\t')[0]
+                        dialog?.dismiss()
+                    }
+                    .create()
+                    .apply {
+                        classesDialog = this
+                    }
+                    .show()
+            }
+        binding.btnPid.setOnClickListener {
+            classesDialog?.show()
+        }
+
         binding.btnSubmit.setOnClickListener { v ->
             val imm: InputMethodManager =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -42,7 +72,7 @@ class ClassesAddFragment : Fragment() {
             val cid = binding.inputCid.text.toString()
             val name = binding.inputName.text.toString()
             val pid = binding.btnPid.text.toString()
-            if (cid.length > 6 && name.length > 3) {
+            if (cid.length == 10 && binding.btnPid.text.length == 10) {
                 RF.getInstance().classesAdd(cid, name, pid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -60,5 +90,12 @@ class ClassesAddFragment : Fragment() {
                 Snackbar.make(v, "请完善表单", Snackbar.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val imm: InputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.inputCid.windowToken, 0)
     }
 }

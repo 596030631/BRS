@@ -55,16 +55,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 					d, _ := json.Marshal(body)
 					_, _ = w.Write(d)
 				} else {
-					BackError(w, CodeErrorLoginPasswd, "login failure")
+					BackTip(w, CodeErrorLoginPasswd, "login failure")
 				}
 			} else {
-				BackError(w, CodeErrorDataBase, err.Error())
+				BackTip(w, CodeErrorDataBase, err.Error())
 			}
 		} else {
-			BackError(w, CodeErrorParamLess, "param less")
+			BackTip(w, CodeErrorParamLess, "param less")
 		}
 	} else {
-		BackError(w, CodeErrorParamFormat, "param parse error")
+		BackTip(w, CodeErrorParamFormat, "param parse error")
 	}
 }
 
@@ -80,31 +80,31 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		userIcon := r.Form.Get("user_icon")
 
 		if len(userId) < 6 || len(userId) > 128 {
-			BackError(w, CodeErrorParamFormat, "user_id error")
+			BackTip(w, CodeErrorParamFormat, "user_id error")
 		} else if match, _ := regexp.MatchString("[A-z|0-9]+", userId); !match {
-			BackError(w, CodeErrorParamFormat, "user_id error format")
+			BackTip(w, CodeErrorParamFormat, "user_id error format")
 		} else if len(passwd) < 6 || len(passwd) > 128 {
-			BackError(w, CodeErrorParamFormat, "password error")
+			BackTip(w, CodeErrorParamFormat, "password error")
 		} else if match, _ := regexp.MatchString("[A-z|0-9]+", userId); !match {
-			BackError(w, CodeErrorParamFormat, "password error format")
+			BackTip(w, CodeErrorParamFormat, "password error format")
 		} else if len(userLevel) != 1 {
-			BackError(w, CodeErrorParamFormat, "user_level error")
+			BackTip(w, CodeErrorParamFormat, "user_level error")
 		} else if match, _ := regexp.MatchString("[1-2]", userLevel); !match {
-			BackError(w, CodeErrorParamFormat, "user_level error, right in [1,2]")
+			BackTip(w, CodeErrorParamFormat, "user_level error, right in [1,2]")
 		} else if len(userName) < 6 || len(userName) > 128 {
-			BackError(w, CodeErrorParamFormat, "user_name error")
+			BackTip(w, CodeErrorParamFormat, "user_name error")
 		} else {
 			userAgeInt := 0
 			if len(userAge) > 0 && len(userAge) < 4 {
 				if userAgeInt, err = strconv.Atoi(userAge); err != nil {
-					BackError(w, CodeErrorParamFormat, "userAge error")
+					BackTip(w, CodeErrorParamFormat, "userAge error")
 					return
 				}
 			}
 
 			var userLevelInt int
 			if userLevelInt, err = strconv.Atoi(userLevel); err != nil {
-				BackError(w, CodeErrorParamFormat, "userLevel error")
+				BackTip(w, CodeErrorParamFormat, "userLevel error")
 				return
 			}
 
@@ -120,22 +120,22 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 							d, _ := json.Marshal(body)
 							_, _ = w.Write(d)
 						} else {
-							BackError(w, CodeErrorDataBase, "insert error")
+							BackTip(w, CodeErrorDataBase, "insert error")
 
 						}
 					} else {
-						BackError(w, CodeErrorDataBase, err.Error())
+						BackTip(w, CodeErrorDataBase, err.Error())
 					}
 				} else if match, _ := regexp.MatchString("Error 1062: Duplicate entry .+ for key 'PRIMARY'", err.Error()); match {
-					BackError(w, CodeErrorRegisterUserExist, "user has exist!")
+					BackTip(w, CodeErrorRegisterUserExist, "user has exist!")
 				} else {
-					BackError(w, CodeErrorDataBase, err.Error())
+					BackTip(w, CodeErrorDataBase, err.Error())
 				}
 			} else {
-				BackError(w, CodeErrorDataBase, err.Error())
+				BackTip(w, CodeErrorDataBase, err.Error())
 			}
 		}
 	} else {
-		BackError(w, CodeErrorParamFormat, err.Error())
+		BackTip(w, CodeErrorParamFormat, err.Error())
 	}
 }

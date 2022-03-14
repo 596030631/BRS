@@ -12,7 +12,7 @@ const CodeErrorParamFormat = 10001
 const CodeErrorParamLess = 10002
 const CodeErrorDataBase = 10003
 
-type BodyError struct {
+type BodyTip struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 }
@@ -26,6 +26,9 @@ func register(w http.ResponseWriter, r *http.Request) {
 func classesAdd(w http.ResponseWriter, r *http.Request) {
 	AddClasses(w, r)
 }
+func classesDelete(w http.ResponseWriter, r *http.Request) {
+	DeleteClasses(w, r)
+}
 func classesList(w http.ResponseWriter, r *http.Request) {
 	ClassesQuery(w, r)
 }
@@ -37,14 +40,15 @@ func Listener() {
 	http.HandleFunc("/user/login", login)
 	http.HandleFunc("/user/register", register)
 	http.HandleFunc("/classes/add", classesAdd)
+	http.HandleFunc("/classes/delete", classesDelete)
 	http.HandleFunc("/classes/list", classesList)
 	http.HandleFunc("/material/add", materialAdd)
 	err := http.ListenAndServe("0.0.0.0:8080", nil)
 	Fatal(err)
 }
 
-func BackError(w http.ResponseWriter, code int, e string) {
-	body := BodyError{Code: code, Msg: e}
+func BackTip(w http.ResponseWriter, code int, e string) {
+	body := BodyTip{Code: code, Msg: e}
 	fmt.Println(body)
 	d, _ := json.Marshal(body)
 	_, _ = w.Write(d)

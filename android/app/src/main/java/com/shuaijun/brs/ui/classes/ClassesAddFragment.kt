@@ -72,7 +72,7 @@ class ClassesAddFragment : Fragment() {
             val cid = binding.inputCid.text.toString()
             val name = binding.inputName.text.toString()
             val pid = binding.btnPid.text.toString()
-            if (cid.length == 10 && binding.btnPid.text.length == 10) {
+            if (cid.length == 4 && binding.btnPid.text.length == 4) {
                 RF.getInstance().classesAdd(cid, name, pid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -55,15 +55,15 @@ func AddMaterial(w http.ResponseWriter, r *http.Request) {
 						d, _ := json.Marshal(body)
 						_, _ = w.Write(d)
 					} else {
-						BackError(w, CodeErrorDataBase, "insert failure")
+						BackTip(w, CodeErrorDataBase, "insert failure")
 					}
 				} else {
-					BackError(w, CodeErrorDataBase, err.Error())
+					BackTip(w, CodeErrorDataBase, err.Error())
 				}
 			} else if match, _ := regexp.MatchString("Error 1062: Duplicate entry .+ for key 'PRIMARY'", err.Error()); match {
-				BackError(w, CodeErrorRegisterUserExist, "user has exist!")
+				BackTip(w, CodeErrorRegisterUserExist, "user has exist!")
 			} else {
-				BackError(w, CodeErrorDataBase, err.Error())
+				BackTip(w, CodeErrorDataBase, err.Error())
 			}
 		}
 	}

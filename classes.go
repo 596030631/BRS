@@ -28,7 +28,7 @@ type BodySingleClasses struct {
 
 func ClassesQuery(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
-		BackError(w, CodeErrorParamFormat, err.Error())
+		BackTip(w, CodeErrorParamFormat, err.Error())
 		return
 	}
 	pid := r.Form.Get("pid")
@@ -52,7 +52,7 @@ func ClassesQuery(w http.ResponseWriter, r *http.Request) {
 		d, _ := json.Marshal(body)
 		_, _ = w.Write(d)
 	} else {
-		BackError(w, CodeErrorDataBase, err.Error())
+		BackTip(w, CodeErrorDataBase, err.Error())
 	}
 }
 
@@ -63,15 +63,15 @@ func AddClasses(w http.ResponseWriter, r *http.Request) {
 		name := r.Form.Get("name")
 		pid := r.Form.Get("pid")
 		if id == "" {
-			BackError(w, CodeErrorParamLess, "cid not find")
+			BackTip(w, CodeErrorParamLess, "cid not find")
 			return
 		}
 		if name == "" {
-			BackError(w, CodeErrorParamLess, "name not find")
+			BackTip(w, CodeErrorParamLess, "name not find")
 			return
 		}
 		if pid == "" {
-			BackError(w, CodeErrorParamLess, "pid not find")
+			BackTip(w, CodeErrorParamLess, "pid not find")
 			return
 		}
 
@@ -87,15 +87,46 @@ func AddClasses(w http.ResponseWriter, r *http.Request) {
 						d, _ := json.Marshal(body)
 						_, _ = w.Write(d)
 					} else {
-						BackError(w, CodeErrorDataBase, "insert error")
+						BackTip(w, CodeErrorDataBase, "insert error")
 					}
 				} else {
-					BackError(w, CodeErrorDataBase, err.Error())
+					BackTip(w, CodeErrorDataBase, err.Error())
 				}
 			} else if match, _ := regexp.MatchString("Error 1062: Duplicate entry .+ for key 'PRIMARY'", err.Error()); match {
-				BackError(w, CodeErrorRegisterUserExist, "classes has exist!")
+				BackTip(w, CodeErrorRegisterUserExist, "classes has exist!")
 			} else {
-				BackError(w, CodeErrorDataBase, err.Error())
+				BackTip(w, CodeErrorDataBase, err.Error())
+			}
+		}
+	}
+}
+
+func DeleteClasses(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err == nil {
+		cid := r.Form.Get("cid")
+		if cid == "" {
+			BackTip(w, CodeErrorParamLess, "cid not found")
+			return
+		}
+		prepare, err := Conn.Prepare(`DELETE FROM classes WHERE cid in (?)`)
+		if err == nil {
+			exec, err := prepare.Exec(cid)
+			if err == nil {
+				eff, err := exec.RowsAffected()
+				if err == nil {
+					if eff == 1 {
+						body := BodyTip{Code: CodeSuccess, Msg: "delete successful"}
+						d, _ := json.Marshal(body)
+						_, _ = w.Write(d)
+					} else {
+						BackTip(w, CodeErrorDataBase, "delete error")
+					}
+				} else {
+					BackTip(w, CodeErrorDataBase, err.Error())
+				}
+			} else {
+				BackTip(w, CodeErrorDataBase, err.Error())
 			}
 		}
 	}

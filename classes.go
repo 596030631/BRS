@@ -104,9 +104,9 @@ func AddClasses(w http.ResponseWriter, r *http.Request) {
 func DeleteClasses(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err == nil {
-		cid := r.Form.Get("cid")
+		cid := r.Form.Get("mid")
 		if cid == "" {
-			BackTip(w, CodeErrorParamLess, "cid not found")
+			BackTip(w, CodeErrorParamLess, "mid not found")
 			return
 		}
 		prepare, err := Conn.Prepare(`DELETE FROM classes WHERE cid in (?)`)

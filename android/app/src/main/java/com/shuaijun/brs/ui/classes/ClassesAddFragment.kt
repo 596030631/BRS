@@ -32,12 +32,9 @@ class ClassesAddFragment : Fragment() {
     ): View =
         FragmentClassesAddBinding.inflate(inflater, container, false).apply { binding = this }.root
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ClassesAddViewModel::class.java)
-
-
 
         RF.getInstance().classesList("all")
             .map {

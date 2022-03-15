@@ -16,4 +16,7 @@ public interface API {
     @GET("classes/list")
     Observable<Classes> classesList(@Query("pid") String pid);
 
+    @GET("classes/delete")
+    Observable<Classes> classesDelete(@Query("cid") String cid);
+
 }

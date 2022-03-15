@@ -6,7 +6,7 @@ import androidx.viewbinding.ViewBinding
 
 class Adapter<V : ViewBinding, D : Any>(
     var viewHolder: (parent: ViewGroup, viewType: Int) -> V,
-    var onBinderViewHolder: (binding: V, position: D) -> Unit,
+    var onBinderViewHolder: (binding: VH<V>, item: D) -> Unit,
     var list: MutableList<D>
 ) :
     RecyclerView.Adapter<VH<V>>() {
@@ -16,8 +16,10 @@ class Adapter<V : ViewBinding, D : Any>(
 
 
     override fun onBindViewHolder(holder: VH<V>, position: Int) {
-        onBinderViewHolder(holder.binding, list[position])
+        onBinderViewHolder(holder, list[position])
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun getData() = list
 }

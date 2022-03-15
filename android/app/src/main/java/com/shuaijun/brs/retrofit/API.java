@@ -2,8 +2,6 @@ package com.shuaijun.brs.retrofit;
 
 import com.shuaijun.brs.ui.classes.Classes;
 
-import java.util.List;
-
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -18,5 +16,14 @@ public interface API {
 
     @GET("classes/delete")
     Observable<Classes> classesDelete(@Query("cid") String cid);
+
+    @GET("material/add")
+    Observable<Classes> materialAdd(@Query("cid") String cid, @Query("pid") String pid, @Query("name") String name, @Query("icon") String icon);
+
+    @GET("material/list")
+    Observable<Classes> materialList(@Query("pid") String pid);
+
+    @GET("material/delete")
+    Observable<Classes> materialDelete(@Query("cid") String cid);
 
 }

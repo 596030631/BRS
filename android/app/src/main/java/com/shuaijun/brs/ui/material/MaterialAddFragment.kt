@@ -27,8 +27,5 @@ class MaterialAddFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MaterialAddViewModel::class.java)
-
-
     }
-
 }

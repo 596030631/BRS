@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.shuaijun.brs.R
@@ -41,7 +39,15 @@ class HomeFragment : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_nav_home_to_classesCatFragment)
         }
 
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        binding.btnMaterialAdd.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_nav_home_to_materialAddFragment)
+        }
+
+        binding.btnMaterialCat.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_nav_home_to_nav_material_cat)
+        }
+
+        homeViewModel.text.observe(viewLifecycleOwner, {
 
         })
         return root

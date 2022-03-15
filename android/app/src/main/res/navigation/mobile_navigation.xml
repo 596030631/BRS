@@ -15,39 +15,42 @@
             app:destination="@id/materialAddFragment" />
         <action
             android:id="@+id/action_nav_home_to_classesAddFragment"
-            app:destination="@id/classesFragment" />
+            app:destination="@id/classesAddFragment" />
         <action
             android:id="@+id/action_nav_home_to_classesCatFragment"
             app:destination="@id/classesCatFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_material_cat"
+            app:destination="@id/nav_material_cat" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.shuaijun.brs.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_material_cat"
+        android:name="com.shuaijun.brs.ui.material.MaterialCatFragment"
+        android:label="@string/menu_material_cat"
+        tools:layout="@layout/fragment_material_cat" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.shuaijun.brs.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_classes_cat"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/materialAddFragment"
         android:name="com.shuaijun.brs.ui.material.MaterialAddFragment"
-        android:label="新增器材"
+        android:label="物料新增"
         tools:layout="@layout/fragment_material_add" />
 
     <fragment
-        android:id="@+id/classesFragment"
+        android:id="@+id/classesAddFragment"
         android:name="com.shuaijun.brs.ui.classes.ClassesAddFragment"
-        android:label="classes_fragment"
+        android:label="类别新增"
         tools:layout="@layout/fragment_classes_add" />
 
     <fragment
         android:id="@+id/classesCatFragment"
         android:name="com.shuaijun.brs.ui.classes.ClassesCatFragment"
-        android:label="fragment_classes_cat"
+        android:label="类别查看"
         tools:layout="@layout/fragment_classes_cat" />
 </navigation>

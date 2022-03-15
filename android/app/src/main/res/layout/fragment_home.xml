@@ -16,19 +16,20 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:contentDescription="@null"
+            android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:text="设备类别"
-            android:textColor="#ff1296db"
+            android:textColor="#1678ff"
             android:textSize="20sp"
-            app:drawableStartCompat="@drawable/ic_home_material_header"
+            app:drawableStartCompat="@drawable/ic_classes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/id2"
             android:layout_width="0dp"
-            android:layout_height="0.1dp"
-            android:background="#1296db"
+            android:layout_height="1dp"
+            android:background="#e2e3e4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/id1" />
@@ -37,12 +38,12 @@
             android:id="@+id/btn_classes_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
             android:gravity="center_horizontal"
             android:padding="16dp"
             android:text="类别新增"
-            android:textColor="#1296db"
-            app:drawableTopCompat="@drawable/ic_home_material_add"
+            android:textColor="@color/black"
+            app:drawableTopCompat="@drawable/ic_round_add"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/id2" />
 
@@ -50,14 +51,64 @@
             android:id="@+id/btn_classes_cat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
             android:gravity="center_horizontal"
             android:padding="16dp"
             android:text="类别查看"
-            android:textColor="#1296db"
-            app:drawableTopCompat="@drawable/ic_home_material_cat"
+            android:textColor="@color/black"
+            app:drawableTopCompat="@drawable/ic_cat"
             app:layout_constraintStart_toEndOf="@id/btn_classes_add"
             app:layout_constraintTop_toBottomOf="@id/id2" />
+
+        <TextView
+            android:id="@+id/id3"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@null"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="物料信息"
+            android:textColor="#1678ff"
+            android:textSize="20sp"
+            app:drawableStartCompat="@drawable/ic_material"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_classes_cat" />
+
+        <View
+            android:id="@+id/id4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#e2e3e4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id3" />
+
+        <TextView
+            android:id="@+id/btn_material_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:text="物料新增"
+            android:textColor="@color/black"
+            app:drawableTopCompat="@drawable/ic_round_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id4" />
+
+        <TextView
+            android:id="@+id/btn_material_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:text="物料查看"
+            android:textColor="@color/black"
+            app:drawableTopCompat="@drawable/ic_cat"
+            app:layout_constraintStart_toEndOf="@id/btn_classes_add"
+            app:layout_constraintTop_toBottomOf="@id/id4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

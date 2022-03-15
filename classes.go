@@ -35,10 +35,10 @@ func ClassesQuery(w http.ResponseWriter, r *http.Request) {
 	var rows *sql.Rows
 	var err error
 
-	if len(pid) == 1 {
-		rows, err = Conn.Query(`SELECT * FROM classes WHERE pid in (?)`, pid)
-	} else {
+	if len(pid) == 0 || pid == "all" {
 		rows, err = Conn.Query(`SELECT * FROM classes`)
+	} else {
+		rows, err = Conn.Query(`SELECT * FROM classes WHERE pid in (?)`, pid)
 	}
 	var data []Classes
 	if err == nil {

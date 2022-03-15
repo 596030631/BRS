@@ -37,7 +37,7 @@ func MaterialQuery(w http.ResponseWriter, r *http.Request) {
 	cid := r.Form.Get("cid")
 	var rows *sql.Rows
 	var err error
-	if len(cid) != 3 || cid == "all" {
+	if len(cid) == 0 || cid == "all" {
 		rows, err = Conn.Query(`SELECT * FROM material`)
 	} else {
 		rows, err = Conn.Query(`SELECT * FROM material WHERE cid in (?)`, cid)

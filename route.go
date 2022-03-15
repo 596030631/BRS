@@ -35,6 +35,12 @@ func classesList(w http.ResponseWriter, r *http.Request) {
 func materialAdd(w http.ResponseWriter, r *http.Request) {
 	AddMaterial(w, r)
 }
+func materialList(w http.ResponseWriter, r *http.Request) {
+	MaterialQuery(w, r)
+}
+func materialDelete(w http.ResponseWriter, r *http.Request) {
+	DeleteMaterial(w, r)
+}
 
 func Listener() {
 	http.HandleFunc("/user/login", login)
@@ -43,6 +49,8 @@ func Listener() {
 	http.HandleFunc("/classes/delete", classesDelete)
 	http.HandleFunc("/classes/list", classesList)
 	http.HandleFunc("/material/add", materialAdd)
+	http.HandleFunc("/material/list", materialList)
+	http.HandleFunc("/material/delete", materialDelete)
 	err := http.ListenAndServe("0.0.0.0:8080", nil)
 	Fatal(err)
 }

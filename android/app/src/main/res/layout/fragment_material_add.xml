@@ -4,8 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:viewBindingIgnore="false"
-    tools:context=".ui.material.MaterialAddFragment">
+    android:padding="16dp"
+    tools:context=".ui.material.MaterialAddFragment"
+    tools:viewBindingIgnore="false">
 
+
+    <EditText
+        android:id="@+id/input_cid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="类别编号"
+        android:background="@null"
+        android:drawableStart="@drawable/ic_classes_add_id"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="物料编号(4位)"
+        android:inputType="number"
+        android:maxLength="4"
+        android:maxLines="1"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints="类别名称"
+        android:background="@null"
+        android:drawableStart="@drawable/ic_classes_add_name"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="物料名称"
+        android:inputType="text"
+        android:maxLength="18"
+        android:maxLines="1"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_cid" />
+
+    <TextView
+        android:id="@+id/btn_pid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="所属类别"
+        android:textColor="#a0a0a0"
+        android:textSize="18sp"
+        app:drawableStartCompat="@drawable/ic_classes_add_pid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_name" />
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

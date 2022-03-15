@@ -49,7 +49,7 @@ class ClassesAddFragment : Fragment() {
                 AlertDialog.Builder(requireContext())
                     .setItems(data) { dialog, which ->
                         Log.d("TAG", "which=$which")
-                        binding.btnPid.text = data[which].split('\t')[0]
+//                        binding.btnPid.text = data[which].split('\t')[0]
                         dialog?.dismiss()
                     }
                     .create()
@@ -58,9 +58,9 @@ class ClassesAddFragment : Fragment() {
                     }
                     .show()
             }
-        binding.btnPid.setOnClickListener {
-            classesDialog?.show()
-        }
+//        binding.btnPid.setOnClickListener {
+//            classesDialog?.show()
+//        }
 
         binding.btnSubmit.setOnClickListener { v ->
             val imm: InputMethodManager =
@@ -68,9 +68,9 @@ class ClassesAddFragment : Fragment() {
             imm.hideSoftInputFromWindow(binding.inputCid.windowToken, 0)
             val cid = binding.inputCid.text.toString()
             val name = binding.inputName.text.toString()
-            val pid = binding.btnPid.text.toString()
-            if (cid.length == 4 && binding.btnPid.text.length == 4) {
-                RF.getInstance().classesAdd(cid, name, pid)
+//            val pid = binding.btnPid.text.toString()
+            if (cid.length == 3) {
+                RF.getInstance().classesAdd(cid, name, "000")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {

@@ -18,7 +18,7 @@ public interface API {
     Observable<Classes> classesDelete(@Query("cid") String cid);
 
     @GET("material/add")
-    Observable<Classes> materialAdd(@Query("cid") String cid, @Query("pid") String pid, @Query("name") String name, @Query("icon") String icon);
+    Observable<Classes> materialAdd(@Query("mid") String cid, @Query("cid") String pid, @Query("name") String name, @Query("icon") String icon);
 
     @GET("material/list")
     Observable<Classes> materialList(@Query("pid") String pid);

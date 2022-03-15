@@ -39,12 +39,12 @@ func materialQuery(userId string) (*User, error) {
 func AddMaterial(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err == nil {
-		uId := r.Form.Get("uid")
-		pId := r.Form.Get("pid")
+		uId := r.Form.Get("mid")
+		pId := r.Form.Get("cid")
 		name := r.Form.Get("name")
 		icon := r.Form.Get("icon")
 		material := Material{uId, pId, name, icon}
-		prepare, err := Conn.Prepare(`INSERT material (uid, pid, name, icon)  VALUES (?,?,?,?)`)
+		prepare, err := Conn.Prepare(`INSERT material (mid, cid, name, icon)  VALUES (?,?,?,?)`)
 		if err == nil {
 			exec, err := prepare.Exec(material.Uid, material.Pid, material.Name, material.Icon)
 			if err == nil {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/loginFragment">
 
     <fragment
         android:id="@+id/nav_home"
@@ -53,4 +53,9 @@
         android:name="com.shuaijun.brs.ui.classes.ClassesCatFragment"
         android:label="类别查看"
         tools:layout="@layout/fragment_classes_cat" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.shuaijun.brs.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

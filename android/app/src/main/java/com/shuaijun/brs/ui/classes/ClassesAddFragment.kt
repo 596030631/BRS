@@ -36,28 +36,28 @@ class ClassesAddFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ClassesAddViewModel::class.java)
 
-        RF.getInstance().classesList("all")
-            .map {
-                val array = arrayListOf<String>()
-                for (i in it.classes) {
-                    array.add(i.cid + "\t" + i.name)
-                }
-                return@map array.toTypedArray()
-            }
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe {data->
-                AlertDialog.Builder(requireContext())
-                    .setItems(data) { dialog, which ->
-                        Log.d("TAG", "which=$which")
+//        RF.getInstance().classesList("all")
+//            .map {
+//                val array = arrayListOf<String>()
+//                for (i in it.classes) {
+//                    array.add(i.cid + "\t" + i.name)
+//                }
+//                return@map array.toTypedArray()
+//            }
+//            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {data->
+//                AlertDialog.Builder(requireContext())
+//                    .setItems(data) { dialog, which ->
+//                        Log.d("TAG", "which=$which")
 //                        binding.btnPid.text = data[which].split('\t')[0]
-                        dialog?.dismiss()
-                    }
-                    .create()
-                    .apply {
-                        classesDialog = this
-                    }
-                    .show()
-            }
+//                        dialog?.dismiss()
+//                    }
+//                    .create()
+//                    .apply {
+//                        classesDialog = this
+//                    }
+//                    .show()
+//            }
 //        binding.btnPid.setOnClickListener {
 //            classesDialog?.show()
 //        }

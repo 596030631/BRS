@@ -47,8 +47,8 @@ class MaterialAddFragment : Fragment() {
             imm.hideSoftInputFromWindow(binding.inputCid.windowToken, 0)
             val cid = binding.inputCid.text.toString()
             val name = binding.inputName.text.toString()
-            val pid = binding.btnPid.text.toString()
-            if (cid.length == 4 && binding.btnPid.text.length == 3) {
+            val pid = binding.btnPid.text.toString().split('\t')[0]
+            if (cid.length == 4 && pid.isNotEmpty()) {
                 RF.getInstance().materialAdd(cid, pid, name, "icon")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -70,6 +70,7 @@ class MaterialAddFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        binding.btnPid.keyListener = null
         binding.btnPid.setOnClickListener {
             classesDialog?.show()
         }
@@ -86,7 +87,7 @@ class MaterialAddFragment : Fragment() {
                 AlertDialog.Builder(requireContext())
                     .setItems(data) { dialog, which ->
                         Log.d("TAG", "which=$which")
-                        binding.btnPid.text = data[which].split('\t')[0]
+                        binding.btnPid.setText(data[which])
                         dialog?.dismiss()
                     }
                     .create()

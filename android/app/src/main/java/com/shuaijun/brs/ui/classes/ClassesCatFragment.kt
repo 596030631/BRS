@@ -62,9 +62,10 @@ class ClassesCatFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                adapter.list = it.classes
-                adapter.notifyItemRangeChanged(0, it.classes.size)
+                it.classes?.let {
+                    adapter.list = it
+                    adapter.notifyItemRangeChanged(0, it.size)
+                }
             }
     }
-
 }

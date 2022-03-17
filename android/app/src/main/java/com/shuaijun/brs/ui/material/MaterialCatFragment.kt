@@ -64,9 +64,11 @@ class MaterialCatFragment : Fragment() {
         RF.getInstance().materialList("all")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                adapter.list = it.materials
-                adapter.notifyItemRangeChanged(0, it.materials.size)
+            .subscribe { it ->
+                it.materials?.let {
+                    adapter.list = it
+                    adapter.notifyItemRangeChanged(0, it.size)
+                }
             }
     }
 

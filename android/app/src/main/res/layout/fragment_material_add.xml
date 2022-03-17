@@ -46,15 +46,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_cid" />
 
-    <TextView
+    <EditText
         android:id="@+id/btn_pid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:autofillHints="所属类别"
+        android:background="@null"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
+        android:hint="所属类别"
+        android:inputType="text"
         android:padding="8dp"
-        android:text="所属类别"
         android:textColor="#a0a0a0"
         android:textSize="18sp"
         app:drawableStartCompat="@drawable/ic_classes_add_pid"
